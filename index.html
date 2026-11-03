@@ -323,6 +323,8 @@
       }
       .model-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:var(--shadow)}
       .model-thumb{display:block;height:252px;position:relative;overflow:hidden}
+      .model-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+      .modal-img{width:100%;border-radius:14px;display:block;margin:0 auto 18px;box-shadow:0 10px 24px rgba(0,0,0,.18)}
       .mini{position:absolute;inset:20px 20px -42px;background:#fdfcf9;border-radius:12px 12px 0 0;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35)}
       .mini-top{height:32px}
       .mini-body{padding:16px 18px}
@@ -1296,6 +1298,7 @@
           </button>
         </div>
         <p class="modal-desc" id="modalDesc"></p>
+        <img class="modal-img" id="modalImg" src="" alt="Prévia do modelo">
         <div class="mock" id="modalMock">
           <div class="mock-top" id="modalTop"><b id="modalBrand"></b><span>Início · Serviços · Contato</span></div>
           <div class="mock-hero">
@@ -1383,37 +1386,37 @@
         var MODELS = {
           clinica: {
             nome: "Clínica", desc: "Para clínicas, consultórios e profissionais da saúde. Passa confiança e facilita o agendamento.",
-            brand: "Clínica Vida", color: "#2e7d6b",
+            brand: "Clínica Vida", color: "#2e7d6b", img: "modelos/clinica.webp",
             title: "Cuidamos do seu sorriso", sub: "Atendimento acolhedor, perto de você. Agende pelo WhatsApp.", cta: "Agendar pelo WhatsApp",
             items: [["Limpeza", "desde R$ 99"], ["Clareamento", "parcele em 3x"], ["Avaliação", "grátis"]]
           },
           advogado: {
             nome: "Advogado", desc: "Para advogados e escritórios. Visual sério e elegante, com áreas de atuação e contato direto.",
-            brand: "Almeida Advocacia", color: "#31456b",
+            brand: "Almeida Advocacia", color: "#31456b", img: "modelos/advogado.webp",
             title: "Defesa dos seus direitos", sub: "Atendimento sigiloso e primeira conversa sem compromisso.", cta: "Falar com o escritório",
             items: [["Família", "divórcio e guarda"], ["Trabalhista", "verbas e acordos"], ["Civil", "contratos e danos"]]
           },
           loja: {
             nome: "Loja", desc: "Para lojas e comércios. Seus produtos em destaque, com pedidos chegando direto no WhatsApp.",
-            brand: "Loja Encanto", color: "#b4552d",
+            brand: "Loja Encanto", color: "#b4552d", img: "modelos/loja.webp",
             title: "Novidades toda semana", sub: "Peça pelo WhatsApp e receba em casa. Confira o catálogo!", cta: "Ver o catálogo",
             items: [["Vestidos", "a partir de R$ 79"], ["Conjuntos", "a partir de R$ 99"], ["Acessórios", "a partir de R$ 19"]]
           },
           restaurante: {
             nome: "Restaurante", desc: "Para restaurantes, lanchonetes e delivery. Cardápio bonito e botão de pedido sempre visível.",
-            brand: "Sabor da Casa", color: "#8c2f2f",
+            brand: "Sabor da Casa", color: "#8c2f2f", img: "modelos/restaurante.webp",
             title: "Comida de verdade, todo dia", sub: "Marmitas, pratos do dia e delivery rápido na região.", cta: "Pedir agora",
             items: [["Prato do dia", "R$ 24,90"], ["Marmita M", "R$ 19,90"], ["Feijoada (sáb)", "R$ 34,90"]]
           },
           corretor: {
             nome: "Corretor de Imóveis", desc: "Para corretores e imobiliárias. Imóveis em destaque com fotos e contato em um toque.",
-            brand: "Imóveis Prime", color: "#7a5c1e",
+            brand: "Imóveis Prime", color: "#7a5c1e", img: "modelos/corretor.webp",
             title: "Seu novo lar começa aqui", sub: "Apartamentos e casas com condições especiais. Fale comigo!", cta: "Ver imóveis",
             items: [["2 quartos", "Santa Cruz"], ["3 quartos", "Campo Grande"], ["Lançamentos", "Minha Casa Minha Vida"]]
           },
           salao: {
             nome: "Salão de Beleza", desc: "Para salões e barbearias. Serviços, preços e agendamento online em uma página só.",
-            brand: "Studio Bella", color: "#8c2f4a",
+            brand: "Studio Bella", color: "#8c2f4a", img: "modelos/salao.webp",
             title: "Realce sua beleza", sub: "Cabelo, unhas e estética com hora marcada. Agende já!", cta: "Agendar horário",
             items: [["Corte", "a partir de R$ 45"], ["Escova", "a partir de R$ 60"], ["Manicure", "a partir de R$ 30"]]
           }
@@ -1429,11 +1432,8 @@
           card.setAttribute("data-model", key);
           card.setAttribute("aria-label", "Ver prévia do modelo " + m.nome);
           card.innerHTML =
-            '<span class="model-thumb" style="background:linear-gradient(150deg,' + m.color + '33,' + m.color + '14)">' +
-              '<span class="mini"><span class="mini-top" style="background:' + m.color + '"></span>' +
-              '<span class="mini-body"><b>' + m.title + '</b><i class="w80"></i><i class="w60"></i>' +
-              '<span class="mini-btn" style="background:' + m.color + '"></span>' +
-              '<span class="mini-row"><s></s><s></s><s></s></span></span></span>' +
+            '<span class="model-thumb">' +
+              '<img src="' + m.img + '" alt="Prévia do modelo ' + m.nome + '" loading="lazy">' +
             '</span>' +
             '<span class="model-info"><h3>' + m.nome + '</h3><p>' + m.desc + '</p>' +
             '<span class="see">Ver prévia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span>';
@@ -1455,6 +1455,8 @@
         function openModal(key) {
           var m = MODELS[key];
           document.getElementById("modalTitle").textContent = "Modelo " + m.nome;
+          document.getElementById("modalImg").src = m.img;
+          document.getElementById("modalImg").alt = "Prévia do modelo " + m.nome;
           document.getElementById("modalDesc").textContent = m.desc + " As cores, textos e fotos são trocados pelos seus.";
           fillMock("modal", m);
           document.querySelectorAll(".modal-ic").forEach(function (ic) { ic.style.background = m.color; });
