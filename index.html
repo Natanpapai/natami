@@ -325,6 +325,13 @@
       .model-thumb{display:block;height:252px;position:relative;overflow:hidden}
       .model-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
       .modal-img{width:100%;border-radius:14px;display:block;margin:0 auto 18px;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+      .car{position:relative}
+      .car-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:26px;line-height:1;cursor:pointer;z-index:2}
+      .car-prev{left:10px}.car-next{right:10px}
+      .car-cap{text-align:center;color:var(--muted);font-size:13.5px;margin:8px 0 4px}
+      .car-dots{display:flex;gap:8px;justify-content:center;margin-bottom:18px}
+      .car-dot{width:10px;height:10px;border-radius:50%;border:0;background:#d8d2c4;cursor:pointer;padding:0}
+      .car-dot.on{background:var(--gold-2);transform:scale(1.25)}
       .mini{position:absolute;inset:20px 20px -42px;background:#fdfcf9;border-radius:12px 12px 0 0;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35)}
       .mini-top{height:32px}
       .mini-body{padding:16px 18px}
@@ -1298,21 +1305,13 @@
           </button>
         </div>
         <p class="modal-desc" id="modalDesc"></p>
-        <img class="modal-img" id="modalImg" src="" alt="Prévia do modelo">
-        <div class="mock" id="modalMock">
-          <div class="mock-top" id="modalTop"><b id="modalBrand"></b><span>Início · Serviços · Contato</span></div>
-          <div class="mock-hero">
-            <h4 id="modalHeroTitle"></h4>
-            <p id="modalHeroSub"></p>
-            <span class="mock-cta" id="modalCta"></span>
-          </div>
-          <div class="mock-items">
-            <div class="mock-item"><i class="modal-ic"></i><b class="modal-i1"></b><s class="modal-s1"></s></div>
-            <div class="mock-item"><i class="modal-ic"></i><b class="modal-i2"></b><s class="modal-s2"></s></div>
-            <div class="mock-item"><i class="modal-ic"></i><b class="modal-i3"></b><s class="modal-s3"></s></div>
-          </div>
-          <div class="mock-foot">© 2026 Seu Negócio · Feito com NATAMI</div>
+        <div class="car" id="carWrap">
+          <button class="car-btn car-prev" id="carPrev" type="button" aria-label="Foto anterior">‹</button>
+          <img class="modal-img" id="modalImg" src="" alt="Prévia do modelo">
+          <button class="car-btn car-next" id="carNext" type="button" aria-label="Próxima foto">›</button>
         </div>
+        <p class="car-cap" id="carCap"></p>
+        <div class="car-dots" id="carDots"></div>
         <div class="modal-actions">
           <a class="btn btn-wa" id="modalWa" href="#" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
@@ -1387,6 +1386,8 @@
           clinica: {
             nome: "Clínica", desc: "Para clínicas, consultórios e profissionais da saúde. Passa confiança e facilita o agendamento.",
             brand: "Clínica Vida", color: "#2e7d6b", img: "modelos/clinica.webp",
+            imgs: ["modelos/clinica.webp", "modelos/clinica-servicos.webp", "modelos/clinica-equipe.webp", "modelos/clinica-agendamento.webp"],
+            caps: ["Página inicial", "Serviços", "Equipe", "Agendamento"],
             title: "Cuidamos do seu sorriso", sub: "Atendimento acolhedor, perto de você. Agende pelo WhatsApp.", cta: "Agendar pelo WhatsApp",
             items: [["Limpeza", "desde R$ 99"], ["Clareamento", "parcele em 3x"], ["Avaliação", "grátis"]]
           },
@@ -1399,6 +1400,8 @@
           loja: {
             nome: "Loja", desc: "Para lojas e comércios. Seus produtos em destaque, com pedidos chegando direto no WhatsApp.",
             brand: "Loja Encanto", color: "#b4552d", img: "modelos/loja.webp",
+            imgs: ["modelos/loja.webp", "modelos/loja-produtos.webp"],
+            caps: ["Página inicial", "Produtos"],
             title: "Novidades toda semana", sub: "Peça pelo WhatsApp e receba em casa. Confira o catálogo!", cta: "Ver o catálogo",
             items: [["Vestidos", "a partir de R$ 79"], ["Conjuntos", "a partir de R$ 99"], ["Acessórios", "a partir de R$ 19"]]
           },
@@ -1444,30 +1447,61 @@
 
         /* ---------- Modal de prévia ---------- */
         var modal = document.getElementById("modelModal");
-        function fillMock(prefix, m) {
-          document.getElementById(prefix + "Top").style.background = m.color;
-          document.getElementById(prefix + "Brand").textContent = m.brand;
-          document.getElementById(prefix + "HeroTitle").textContent = m.title;
-          document.getElementById(prefix + "HeroSub").textContent = m.sub;
-          var cta = document.getElementById(prefix + "Cta");
-          cta.textContent = m.cta; cta.style.background = m.color;
-        }
         function openModal(key) {
           var m = MODELS[key];
           document.getElementById("modalTitle").textContent = "Modelo " + m.nome;
-          document.getElementById("modalImg").src = m.img;
-          document.getElementById("modalImg").alt = "Prévia do modelo " + m.nome;
           document.getElementById("modalDesc").textContent = m.desc + " As cores, textos e fotos são trocados pelos seus.";
-          fillMock("modal", m);
-          document.querySelectorAll(".modal-ic").forEach(function (ic) { ic.style.background = m.color; });
-          for (var i = 0; i < 3; i++) {
-            document.querySelector(".modal-i" + (i + 1)).textContent = m.items[i][0];
-            document.querySelector(".modal-s" + (i + 1)).textContent = m.items[i][1];
-          }
+          carSetup(key);
           document.getElementById("modalWa").href = WA + "?text=" + encodeURIComponent("Olá! Escolhi o modelo " + m.nome + " da NATAMI e quero um site assim para o meu negócio.\n\nModelo " + m.nome + " — " + m.desc + "\n\nExemplo deste modelo: " + m.brand + " — \"" + m.title + "\"\nDestaques: " + m.items.map(function (it) { return it[0]; }).join(", ") + ".\n\nPode me passar mais informações?");
           modal.classList.add("open");
           document.body.style.overflow = "hidden";
         }
+        /* ---------- Carrossel da prévia ---------- */
+        var carKey = null, carIdx = 0, carImgs = [], carCaps = [];
+        var carImgEl = document.getElementById("modalImg");
+        var carCapEl = document.getElementById("carCap");
+        var carDotsEl = document.getElementById("carDots");
+        var carPrevBtn = document.getElementById("carPrev");
+        var carNextBtn = document.getElementById("carNext");
+        function carShow(i) {
+          if (!carImgs.length) return;
+          carIdx = (i + carImgs.length) % carImgs.length;
+          carImgEl.src = carImgs[carIdx];
+          carImgEl.alt = "Prévia do modelo " + (carKey ? MODELS[carKey].nome : "") + " — " + carCaps[carIdx];
+          carCapEl.textContent = (carIdx + 1) + " de " + carImgs.length + " · " + carCaps[carIdx];
+          var dots = carDotsEl.querySelectorAll(".car-dot");
+          dots.forEach(function (d, j) { d.classList.toggle("on", j === carIdx); });
+          var multi = carImgs.length > 1;
+          carPrevBtn.style.display = multi ? "" : "none";
+          carNextBtn.style.display = multi ? "" : "none";
+          carDotsEl.style.display = multi ? "" : "none";
+          carCapEl.style.display = multi ? "" : "none";
+        }
+        function carSetup(key) {
+          var m = MODELS[key];
+          carKey = key;
+          carImgs = m.imgs || [m.img];
+          carCaps = m.caps || ["Página inicial"];
+          carDotsEl.innerHTML = "";
+          carImgs.forEach(function (_, j) {
+            var b = document.createElement("button");
+            b.className = "car-dot"; b.type = "button";
+            b.setAttribute("aria-label", "Ver foto " + (j + 1));
+            b.addEventListener("click", function () { carShow(j); });
+            carDotsEl.appendChild(b);
+          });
+          carShow(0);
+        }
+        carPrevBtn.addEventListener("click", function () { carShow(carIdx - 1); });
+        carNextBtn.addEventListener("click", function () { carShow(carIdx + 1); });
+        var carX = null;
+        carImgEl.addEventListener("touchstart", function (e) { carX = e.touches[0].clientX; }, {passive: true});
+        carImgEl.addEventListener("touchend", function (e) {
+          if (carX === null) return;
+          var dx = e.changedTouches[0].clientX - carX;
+          if (Math.abs(dx) > 40) { carShow(carIdx + (dx < 0 ? 1 : -1)); }
+          carX = null;
+        }, {passive: true});
         function closeModal() {
           modal.classList.remove("open");
           document.body.style.overflow = "";
