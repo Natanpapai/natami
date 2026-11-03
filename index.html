@@ -323,7 +323,7 @@
       }
       .model-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:var(--shadow)}
       .model-thumb{display:block;height:252px;position:relative;overflow:hidden}
-      .model-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+      .model-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:opacity .25s ease}
       .modal-img{width:100%;border-radius:14px;display:block;margin:0 auto 18px;box-shadow:0 10px 24px rgba(0,0,0,.18)}
       .car{position:relative}
       .car-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:26px;line-height:1;cursor:pointer;z-index:2}
@@ -1445,6 +1445,22 @@
           card.addEventListener("click", function () { openModal(key); });
           grid.appendChild(card);
           revealIO.observe(card);
+          /* Vitrine: o cartão passa as fotos do modelo sozinho */
+          (function () {
+            var list = m.imgs || [m.img];
+            if (list.length < 2) return;
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            list.forEach(function (src) { var p = new Image(); p.src = src; });
+            var imgEl = card.querySelector(".model-thumb img");
+            var gi = 0;
+            function vitrineStep() {
+              if (document.getElementById("modelModal").classList.contains("open")) return;
+              gi = (gi + 1) % list.length;
+              imgEl.style.opacity = "0";
+              setTimeout(function () { imgEl.src = list[gi]; imgEl.style.opacity = "1"; }, 250);
+            }
+            setTimeout(function () { setInterval(vitrineStep, 4000); }, idx * 700);
+          })();
         });
 
         /* ---------- Modal de prévia ---------- */
